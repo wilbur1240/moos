@@ -1,0 +1,1 @@
+export PATH=$PATH:/home/wilbur/moos_test/moos-ivp/bin
