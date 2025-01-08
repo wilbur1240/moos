@@ -1,0 +1,9 @@
+# pack-refs with: peeled fully-peeled sorted 
+7824fc4c1c2cfa3c0ebcf89cc75a2a318799ce28 refs/remotes/origin/2022-pshare
+02d003dd250547d4afd57593e9fd10c11c59a6c2 refs/remotes/origin/V10-beta-rc1
+4bb8e157cec2e6119b207b3fd1f6009d4f2a87d4 refs/remotes/origin/devel
+090d19be595274a7d5c9233d82e852e2d0e23828 refs/remotes/origin/gh-pages
+b897ea86dba8b61412dc48ac0cfb5ff34cdaf5f6 refs/remotes/origin/master
+91d9010f386256f5458614a3c95bb22b9f83ca63 refs/remotes/origin/release-10.0.1-rc1
+02d003dd250547d4afd57593e9fd10c11c59a6c2 refs/tags/10.0.0-release
+07a2f194fe9cc0e6a208e687989c5e26e3d7343a refs/tags/10.0.1-release

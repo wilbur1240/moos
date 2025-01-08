@@ -1,0 +1,3 @@
+[submodule "moos-ivp-wilbur"]
+	path = moos-ivp-wilbur
+	url = git@github.com:Laipi1240/moos-ivp-wilbur.git

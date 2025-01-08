@@ -1,0 +1,13 @@
+[core]
+	repositoryformatversion = 0
+	filemode = true
+	bare = false
+	logallrefupdates = true
+	ignorecase = true
+	precomposeunicode = true
+[remote "origin"]
+	url = https://github.com/themoos/essential-moos.git
+	fetch = +refs/heads/*:refs/remotes/origin/*
+[branch "2022-pshare"]
+	remote = origin
+	merge = refs/heads/2022-pshare

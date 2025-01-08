@@ -1,0 +1,35 @@
+# pack-refs with: peeled fully-peeled sorted 
+e0c97f1358c7f33801c12f3032e8f8815f5985cd refs/remotes/origin/AlonBug
+bde7b76401ed2a765b3312e294ef748a51f938bd refs/remotes/origin/GetPot2
+c29f546f304ce2752c2686b194de19beb74ecf0d refs/remotes/origin/ThalesThinking
+f6d49a62716038b17b05d94b0e3daf6be6c4df64 refs/remotes/origin/V10-beta-rc1
+83aaaf83d848a4261095b412ce2abd7c7ba52a67 refs/remotes/origin/V10-rc1
+d6ebd48882d34671b4e18aac859811bab432017f refs/remotes/origin/add-moos-poke-cli
+1d7c80c3372572332432244c6eb920dbbdbfd4a5 refs/remotes/origin/devel
+1c18b7aface03d5a0ada63e318a498a2792b0c9d refs/remotes/origin/disconnectbug
+9e53a2e18828cdcc4d077e3e0c4c0dd24014f68a refs/remotes/origin/gh-pages
+24942423ce3f3ebdb3cee876edb71bdd04dc5555 refs/remotes/origin/master
+1e61cbb23f45b2d3b93568243f0518a13e3b1e9e refs/remotes/origin/revised-serialisation
+538d1e0b6e2cbd02bd21d7ab75c22d5014049938 refs/remotes/origin/sendregistered
+02241d42e14eecdedfb6b3f1b11d405862bf8b61 refs/remotes/origin/speedy
+ffec018702d91cca03c996a7f6230ba901f591c6 refs/remotes/origin/suspend-bug-fix
+c7227ca16c63474cc113e271213838f88017f855 refs/remotes/origin/wildcardbug
+6315f55946eb5e9d135841ef1dfac4d4aaf90395 refs/tags/10.0.0
+^2d68a0fa2abb95aab7617b04ae4521b523b3c431
+526ba75023051a69f85c1e78a67d552354215052 refs/tags/10.0.0-release
+1c18b7aface03d5a0ada63e318a498a2792b0c9d refs/tags/10.0.1-devel
+f460255f15f466060209335eee53892781f7b822 refs/tags/10.0.1-release
+ae75702e9d9688735eef651d5e61780a0d5fefe1 refs/tags/10.0.2-devel
+^ef17c27d70cd96734e51fa64cd59d194af5b7b4b
+971d04e4d34cbc0ec1729b2ab2c8c7d1471af326 refs/tags/10.0.2-release
+^d13be4bf3558b3056d6823e1024598f24903c798
+f61342297c9ab1cc1e21e1eb808d4a426d37e6fb refs/tags/10.0.2.a-release
+fd517c5fd14a085d56963dab4cfccd44cd67cd73 refs/tags/10.0.3-devel-candidate
+363fa3326a15f67fed9893b40a179834b7c0a52e refs/tags/IvPCompatibility
+a610f36c8c5a70b4452f273225723a6bde8c9652 refs/tags/PreProfilingmerge
+50a74c5d633be17ad459207214b294a55d91f5d6 refs/tags/SerialisationImproved
+6a234e602f81973af2c41e9290d4b66ce67b0699 refs/tags/SerialisationMemory
+577b091198fcefc515bf07e8c18c5078baa5313b refs/tags/Stable
+a043402bbb54500d3ec5d0c2ad973cb30984c945 refs/tags/three-modes-of-iterate
+291e083b3f89e4f0c3145258eeb3399b67283132 refs/tags/v10.0.4-alpha
+19d06a9aefc910b0504c2c8589b1403f3b6e77a8 refs/tags/v10.4.0
