@@ -1,0 +1,25 @@
+//--------------------------------------------------
+ProcessConfig = pLogger
+{
+  AppTick     = 10
+  CommsTick   = 10
+
+  File    = LOG_%(VNAME)
+  #ifdef BATCH_NAME
+  PATH          = ./logs_simulation/%(BATCH_NAME)/%(MISSION_NAME)
+  #else
+  PATH          = ./logs_simulation/%(MISSION_NAME)
+  #endif
+  SyncLog   = true @ 0.2
+  AsyncLog   = true
+  FileTimeStamp = true
+
+  Log = IVPHELM_LIFE_EVENT @ 0 nosync
+
+  // Log it all!!!!!
+  LogAuxSrc = true
+  WildCardLogging = true
+  WildCardOmitPattern = *_STATUS
+  WildCardOmitPattern = DB_VARSUMMARY
+  WildCardOmitPattern = DB_RWSUMMARY
+}

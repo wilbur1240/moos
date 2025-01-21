@@ -1,0 +1,17 @@
+//------------------------------------------------------
+// uSimMarine Config Block
+
+ProcessConfig = uSimMarine
+{
+  AppTick   = 10
+  CommsTick = 10
+
+	deprecated_ok = true
+  start_pos = $(START_POS), 180
+  prefix    = NAV
+
+  drift_x = 0.05
+  drift_y = 0.01
+
+  app_logging = true
+}

@@ -1,0 +1,13 @@
+gen_swimmers --poly=60,10:-75.5402,-54.2561:-36.9866,-135.58:98.5536,-71.3241 --swimmers=15 --unreg=25 --sep=10 > mit_00.txt
+
+gen_swimmers --poly=60,10:-75.5402,-54.2561:-36.9866,-135.58:98.5536,-71.3241 --swimmers=19 --unreg=25 --sep=10 > mit_02.txt
+
+gen_swimmers --poly=60,10:-75.5402,-54.2561:-36.9866,-135.58:98.5536,-71.3241 --swimmers=19 --unreg=25 --sep=10 > mit_01.txt
+
+gen_swimmers --poly=60,10:-75.5402,-54.2561:-36.9866,-135.58:98.5536,-71.3241 --swimmers=11 --unreg=25 --sep=2 > mit_03.txt
+
+gen_swimmers --poly=60,10:-75.5402,-54.2561:-36.9866,-135.58:98.5536,-71.3241 --swimmers=15 --unreg=25 --sep=10 > mit_04.txt
+
+gen_swimmers --poly=60,10:-75.5402,-54.2561:-36.9866,-135.58:98.5536,-71.3241 --swimmers=17 --unreg=25 --sep=10 > mit_05.txt
+
+gen_swimmers --poly=60,10:-75.5402,-54.2561:-36.9866,-135.58:98.5536,-71.3241 --swimmers=11 --unreg=25 --sep=10 > mit_06.txt

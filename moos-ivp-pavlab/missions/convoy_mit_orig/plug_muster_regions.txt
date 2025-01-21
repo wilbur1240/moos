@@ -1,0 +1,5 @@
+
+muster_region = format=radial, x=-38, y=-59, radius=20, pts=5, snap=1,label=one
+
+muster_region = format=radial, x=55, y=-20, radius=20, pts=5, snap=1,label=two
+

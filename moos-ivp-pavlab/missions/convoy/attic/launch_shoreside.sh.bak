@@ -1,0 +1,83 @@
+#!/bin/bash 
+#-------------------------------------------------------------- 
+#   Script: launch_shoreside.sh    
+#  Mission: juan_de_fuca
+#   Author: Michael Benjamin   
+#   LastEd: January 2021
+#-------------------------------------------------------------- 
+#  Part 1: Define a convenience function for producing terminal
+#          debugging/status output depending on the verbosity.
+#-------------------------------------------------------------- 
+vecho() { if [ "$VERBOSE" != "" ]; then echo "$ME: $1"; fi }
+
+#-------------------------------------------------------------- 
+#  Part 2: Set Global variables
+#-------------------------------------------------------------- 
+ME=`basename "$0"`
+TIME_WARP=1
+JUST_MAKE="no"
+VERBOSE=""
+AUTO_LAUNCHED="no"
+SHORE_PSHARE="9300"
+
+#-------------------------------------------------------
+#  Part 3: Check for and handle command-line arguments
+#-------------------------------------------------------
+for ARGI; do
+    if [ "${ARGI}" = "--help" -o "${ARGI}" = "-h" ]; then
+	echo "$ME: [OPTIONS] [time_warp]                      " 
+	echo "                                                "
+	echo "Options:                                        "
+        echo "  --help, -h                                    "
+        echo "    Display this help message                   "
+        echo "  --verbose, -v                                 "
+        echo "    Increase verbosity                          "
+	echo "  --just_make, -j                               " 
+	echo "    Just make target files. Do not launch.      "
+	echo "  --shore_pshare=PORT                           " 
+	echo "    Port on which shoreside pShare is listening "
+        echo "  --auto, -a                                    "
+        echo "     Auto-launched by a script.                 "
+        echo "     Will not launch uMAC as the final step.    "
+	exit 0;
+    elif [ "${ARGI}" = "--verbose" -o "${ARGI}" = "-v" ]; then
+	VERBOSE="yes"
+    elif [ "${ARGI//[^0-9]/}" = "$ARGI" -a "$TIME_WARP" = 1 ]; then 
+        TIME_WARP=$ARGI
+    elif [ "${ARGI}" = "--just_build" -o "${ARGI}" = "-j" ]; then
+	JUST_MAKE="yes"
+    elif [ "${ARGI:0:15}" = "--shore_pshare=" ]; then
+        SHORE_PSHARE="${ARGI#--shore_pshare=*}"
+    elif [ "${ARGI}" = "--auto" -o "${ARGI}" = "-a" ]; then
+        AUTO_LAUNCHED="yes"
+    else 
+	echo "$ME: Bad Arg:[$ARGI]. Exit Code 1."
+	exit 1
+    fi
+done
+
+#-------------------------------------------------------
+#  Part 4: Create the .moos and .bhv files. 
+#-------------------------------------------------------
+
+nsplug meta_shoreside.moos targ_shoreside.moos -i -f WARP=$TIME_WARP \
+       SHORE_PSHARE=$SHORE_PSHARE
+
+if [ ${JUST_MAKE} = "yes" ]; then
+    vecho "JUST_MAKE is enabled - exiting now."
+    exit 0
+fi
+
+#-------------------------------------------------------
+#  Part 5: Launch the processes
+#-------------------------------------------------------
+echo "Launching $VNAME MOOS Community. WARP=" $TIME_WARP
+pAntler targ_shoreside.moos >& /dev/null &
+echo "Done Launching Shoreside Community"
+
+#-------------------------------------------------------------- 
+# Part 6: Launch uMAC until the mission is quit          
+#-------------------------------------------------------------- 
+if [ ${AUTO_LAUNCHED} = "no" ]; then
+    uMAC targ_shoreside.moos
+fi

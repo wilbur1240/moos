@@ -1,0 +1,15 @@
+ //*****************************************************************/
+ //*    NAME: Alex Wunderlich                                      */
+ //*    ORGN: Dept of Mechanical Eng / 2N, MIT Cambridge MA        */
+ //*    FILE: pGenGreedyRescue.moos                                        */
+ //*    DATE: Mar 8th 2022                                         */
+ //*****************************************************************/
+ //------------------------------------------------
+// pGenGreedyRescue config block
+
+ProcessConfig = pGenGreedyRescue
+{
+   AppTick   = 4
+   CommsTick = 4
+}
+

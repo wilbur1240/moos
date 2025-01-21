@@ -1,0 +1,12 @@
+//--------------------------------------------------
+// uFldMessageHandler Config Block
+
+ProcessConfig = uFldMessageHandler
+{
+  AppTick   = 3
+  CommsTick = 3
+
+  strict_addressing = false
+
+	aux_info = node+app
+}

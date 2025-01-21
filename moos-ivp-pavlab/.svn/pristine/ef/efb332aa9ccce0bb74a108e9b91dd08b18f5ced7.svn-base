@@ -1,0 +1,171 @@
+//*******************************************************
+// ShoreSide Configuration File
+
+ServerHost = localhost
+ServerPort = $(MOOS_PORT)
+Community  = shoreside
+
+#include plug_origin_warp.moos
+
+//--------------------------------------------------------
+Processconfig = ANTLER
+{
+  MSBetweenLaunches = 100
+
+  Run = MOOSDB          @ NewConsole = false
+  Run = pRealm          @ NewConsole = false
+  Run = pMarineViewer   @ NewConsole = false
+  Run = pLogger         @ NewConsole = false
+
+  Run = pShare          @ NewConsole = false
+  Run = pHostInfo       @ NewConsole = false
+  Run = uFldShoreBroker @ NewConsole = false
+
+  Run = uProcessWatch   @ NewConsole = false
+  Run = uFldNodeComms   @ NewConsole = false
+}
+
+#include plug_pShare.moos
+#include plug_pHostInfo.moos
+#include plug_uProcessWatch.moos
+
+//--------------------------------------------------
+// ufldnodecomms Config Block
+
+ProcessConfig = uFldNodeComms
+{
+  AppTick   = 2
+  CommsTick = 2
+
+  comms_range      = 5000
+  critical_range   = 25
+
+  min_msg_interval = 0
+  max_msg_length   = 10000
+  groups           = false
+
+  view_node_rpt_pulses = false
+}
+
+//--------------------------------------------------
+// uFldShoreBroker Config Block
+
+ProcessConfig = uFldShoreBroker
+{
+  AppTick       = 1
+  CommsTick     = 1
+
+  qbridge  = DEPLOY, RETURN, STATION_KEEP, NODE_REPORT, NODE_MESSAGE
+  qbridge  = MOOS_MANUAL_OVERRIDE, APPCAST_REQ, AVOID
+  qbridge  = SAY_MOOS, LEG_RUNNING, ZIGGING, LEG_UPDATE
+  qbridge  = ATURN, ATURN_ENGAGE, FSTOP_UPDATE
+
+	bridge   = src=HEARTBEAT
+	bridge   = src=DRIFT_VECTOR_ADD
+	bridge   = src=DRIFT_VECTOR
+	
+  bridge   = src=HELM_MAP_CLEAR, alias=HELM_MAP_CLEAR
+}
+
+//--------------------------------------------------
+// pLogger Config Block
+
+ProcessConfig = pLogger
+{
+  AppTick       = 10
+  CommsTick     = 10
+
+  File          = XLOG_SHORESIDE
+  PATH          = ./
+  AsyncLog      = true
+  FileTimeStamp = true
+  LogAuxSrc     = true
+
+  // Log it all!!!!!
+  WildCardLogging = true
+  WildCardOmitPattern = *_STATUS
+  WildCardOmitPattern = DB_VARSUMMARY
+  WildCardOmitPattern = DB_RWSUMMARY
+}
+
+//--------------------------------------------------
+// pMarineViewer Config Block
+
+ProcessConfig = pMarineViewer
+{
+  AppTick    = 4
+  CommsTick  = 4
+
+  set_pan_x  = -90
+  set_pan_y  = -280
+  zoom       = 0.95
+
+  //tiff_file            = forrest19.tif
+  tiff_file            = MIT_SP.tif
+  tiff_file            = mit_sp_osm18.tif
+  tiff_file            = mit_sp_goo18.tif
+  vehicles_shape_scale = 1.5
+  vehicles_name_mode   = names
+
+  circle_viewable_all = true
+
+	beat_flag = HEARTBEAT=true
+	
+  appcast_viewable = true
+  appcast_color_scheme = indigo
+
+  left_context[station] = STATION_KEEP_$[UP_VNAME_CLOSEST] = true 
+  left_context[move_ctr] = LEG_UPDATE_ALL = shift_pt = $[XPOS],$[YPOS]
+	
+  //scope  = LEG_SPDS_REP
+  scope  = FT_REPORT
+
+  action = STATION_KEEP_ALL = false
+  action = STATION_KEEP_ALL = true
+
+  button_one   = DEPLOY  # DEPLOY_ALL=true
+  button_one   = MOOS_MANUAL_OVERRIDE_ALL=false
+  button_one   = RETURN_ALL=false # STATION_KEEP_ALL=false
+  button_one   = LEG_RUNNING_ALL=true
+
+  button_two   = RETURN  # RETURN_ALL=true
+  button_two   = RETURN  # STATION_KEEP_ALL=false
+
+	button_three = ALLSTOP # DEPLOY_ALL=false
+
+	button_four  = STATION # STATION_KEEP_ALL=true	
+
+	button_5  = ZIG_YES # LEG_UPDATE_ALL=midflag=ZIGGING=true
+	button_6  = ZIG_NO  # LEG_UPDATE_ALL=midflag=clearall
+
+	button_7  = FSTOP_YES # LEG_UPDATE_ALL=midflag=FULL_STOPPING=true
+	button_8  = FSTOP_NO  # LEG_UPDATE_ALL=midflag=clearall
+
+	button_9  = AND_STAR # ATURN_ALL=true
+	button_9  = AND_STAR # ATURN_ENGAGE_ALL=star,turnrad=15,caprad=5,turnpts=16
+	button_10 = AND_PORT # ATURN_ALL=true
+	button_10 = AND_PORT # ATURN_ENGAGE_ALL=port,turnrad=15,caprad=5,turnpts=16
+
+	button_11  = FTURN_YES # LEG_UPDATE_ALL=midflag=FIX_TURNING=true
+	button_12  = FTURN_NO  # LEG_UPDATE_ALL=midflag=clearall
+
+	button_13 = RAD_MORE # LEG_UPDATE_ALL=turn_rad_mod=5
+	button_14 = RAD_LESS # LEG_UPDATE_ALL=turn_rad_mod=-5
+
+	button_15 = ANG_MORE # LEG_UPDATE_ALL=leg_angle_mod=5
+	button_16 = ANG_LESS # LEG_UPDATE_ALL=leg_angle_mod=-5
+
+	button_17 = EXP1 # ATURN_ABE=true
+	button_17 = EXP1 # ATURN_ENGAGE_ABE=star,turnrad=15,caprad=5,turnpts=16
+
+	button_17 = EXP1 # ATURN_ABE=true
+	button_17 = EXP1 # LEG_UPDATE_ABE=midflag=
+
+	button_17 = EXP1 # LEG_UPDATE_BEN=midflag=FIX_TURNING=true
+	button_17 = EXP1 # LEG_UPDATE_BEN=midflag=clearall
+	button_18 = WND0 # DRIFT_VECTOR=0,0
+
+	button_19 = WND+ # DRIFT_VECTOR_ADD=180,0.2
+	button_20 = WND- # DRIFT_VECTOR_ADD=0,0.2
+}
+

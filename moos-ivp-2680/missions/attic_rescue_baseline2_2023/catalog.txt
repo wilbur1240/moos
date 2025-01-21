@@ -1,0 +1,17 @@
+
+Pav60 Missions
+==============
+Reg only:   good for testing 1-1 missions
+Reg/UnReg:  good for testing 2-0 missions
+
+Pav90 Missions
+==============
+Reg only:   marginal: 1-1 mission
+Reg/Unreg:  2-2 missions
+
+
+mit_60_01.txt            7, 15(3), 21
+mit_60_unreg_01.txt      7/7, 5/11(3), 17/5
+
+mit_90_01.txt            11, 21(3), 29
+mit_90_unreg_01.txt      9/9, 11/15(3), 21/7

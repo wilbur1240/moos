@@ -1,0 +1,31 @@
+//------------------------------------------------------
+// uSimMarineV22 Config Block
+
+ProcessConfig = uSimMarineV22
+{
+  AppTick   = 10
+  CommsTick = 10
+
+  start_pos = $(START_POS)
+  prefix    = NAV
+	
+	thrust_map = 100:2
+	turn_rate = 90
+	
+  depth_control = false
+  max_acceleration     = 0.2        // meters/sec^2               
+  max_deceleration     = 0.5      // meters/sec^2               
+  max_depth_rate       = 0.5      // meters/sec                 
+  max_depth_rate_speed = 2.0      // meters/sec  
+
+  //post_des_thrust      = DESIRED_THRUST                        
+  //post_des_rudder      = DESIRED_RUDDER
+  
+  // Maximums
+  //maxrudder  = 100
+  //maxthrust  = 100
+  
+  // A non-zero SPEED_FACTOR overrides use of SPEED_PID
+  // Will set DESIRED_THRUST = DESIRED_SPEED * SPEED_FACTOR
+  //speed_factor = 20
+}

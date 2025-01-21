@@ -1,0 +1,152 @@
+#!/bin/bash
+#-------------------------------------------------------------- 
+#   Script: launch_vehicle.sh    
+#  Mission: juan_de_fuca
+#   Author: Michael Benjamin   
+#   LastEd: January 2021
+#-------------------------------------------------------------- 
+#  Part 1: Define a convenience function for producing terminal
+#          debugging/status output depending on the verbosity.
+#-------------------------------------------------------------- 
+vecho() { if [ "$VERBOSE" != "" ]; then echo "$ME: $1"; fi }
+
+#-------------------------------------------------------------- 
+#  Part 2: Set Global Variables
+#-------------------------------------------------------------- 
+ME=`basename "$0"`
+TIME_WARP=1
+VERBOSE=""
+JUST_MAKE="no"
+VNAME="who"
+INDEX="1"
+SHOREIP="localhost"
+SHORE_PSHARE="9300"
+START="0,0"  
+SPEED="2.0"  
+AUTO_LAUNCHED="no"
+LOG_CLEAN="no"
+MAXSPD="5"
+MTASC=""
+
+#-------------------------------------------------------
+#  Part 3: Check for and handle command-line arguments
+#-------------------------------------------------------
+for ARGI; do
+    if [ "${ARGI}" = "--help" -o "${ARGI}" = "-h" ]; then
+	echo "$ME: [OPTIONS] [time_warp]                              "
+	echo "                                                        "
+	echo "Options:                                                "
+	echo "  --help, -h                                            " 
+	echo "    Print this help message and exit                    "
+	echo "  --verbose, -v                                         " 
+	echo "    Increase verbosity                                  "
+	echo "  --just_make, -j                                       " 
+	echo "    Just make the targ*.moos and targ*.bhv file and exit"
+	echo "  --vname=VNAME                                         " 
+	echo "    Set the vheicle name (and MOOS community name)      "
+	echo "  --index=INDEX                                         " 
+	echo "    Set index for choosing MOOSDB and share listen port "
+	echo "  --shoreip=IPADDR                                      " 
+	echo "    The IP address where to which the vehicle will try  "
+	echo "    to connect (via uFldNodeBroker)                     "
+	echo "  --shore_pshare=PORT                                   " 
+	echo "    Port on which shoreside pShare is listening         "
+	echo "  --startpos=X,Y                                        " 
+	echo "    A start position typically chosen by the script that"
+	echo "    is launching this script (to ensure separation)     "
+	echo "  --speed=meters/sec                                    " 
+	echo "    The speed use for transiting/loitering              "
+	echo "  --maxspd=meters/sec                                   " 
+	echo "    The max speed capability of the vehicle, passed to  "
+	echo "    uSimMarine for setting its thrust map               "
+        echo "  --auto, -a                                            "
+        echo "     Auto-launched by a script.                         "
+        echo "     Will not launch uMAC as the final step.            "
+        echo "  --mtasc, -m                                           "
+        echo "     Mission is being remotely launched (e.g. MTASC)    "
+	exit 0;
+    elif [ "${ARGI}" = "--verbose" -o "${ARGI}" = "-v" ]; then
+        VERBOSE="yes"
+    elif [ "${ARGI//[^0-9]/}" = "$ARGI" -a "$TIME_WARP" = 1 ]; then 
+        TIME_WARP=$ARGI
+    elif [ "${ARGI}" = "--just_make" -o "${ARGI}" = "-j" ]; then
+	JUST_MAKE="yes"
+    elif [ "${ARGI}" = "--auto" -o "${ARGI}" = "-a" ]; then
+        AUTO_LAUNCHED="yes"
+    elif [ "${ARGI}" = "--logclean" -o "${ARGI}" = "-l" ]; then
+	LOG_CLEAN="yes"
+    elif [ "${ARGI}" = "--mtasc" -o "${ARGI}" = "-m" ]; then
+	MTASC="yes"
+    elif [ "${ARGI:0:8}" = "--vname=" ]; then
+        VNAME="${ARGI#--vname=*}"
+    elif [ "${ARGI:0:8}" = "--index=" ]; then
+        INDEX="${ARGI#--index=*}"
+    elif [ "${ARGI:0:8}" = "--start=" ]; then
+        START="${ARGI#--start=*}"
+    elif [ "${ARGI:0:10}" = "--shoreip=" ]; then
+        SHOREIP="${ARGI#--shoreip=*}"
+    elif [ "${ARGI:0:15}" = "--shore_pshare=" ]; then
+        SHORE_PSHARE="${ARGI#--shore_pshare=*}"
+    elif [ "${ARGI:0:8}" = "--speed=" ]; then
+        SPEED="${ARGI#--speed=*}"
+    elif [ "${ARGI:0:9}" = "--maxspd=" ]; then
+        MAXSPD="${ARGI#--maxspd=*}"
+    else 
+	echo "$ME: Bad Arg:[$ARGI]. Exit Code 1."
+	exit 1
+    fi
+done
+
+#-------------------------------------------------------
+#  Part 4: If Log clean before launch, do it now. 
+#          In MTASC missions, remote cleaning is essential.
+#-------------------------------------------------------
+if [ "$LOG_CLEAN" = "yes" ]; then
+    vecho "Cleaning local Log Files"
+    rm -rf LOG* XLOG* MOOSLog*
+fi
+
+
+#-------------------------------------------------------
+#  Part 5: Create the .moos and .bhv files. 
+#-------------------------------------------------------
+VPORT=`expr $INDEX + 9000`
+LPORT=`expr $INDEX + 9300`
+
+# interactive nsplug only when not being remotely launched.
+NSARGS="--force"
+if [ "${MTASC}" = "" ]; then
+    NSARGS+=" --interactive"
+fi
+
+nsplug meta_vehicle.moos targ_$VNAME.moos $NSARGS WARP=$TIME_WARP  \
+       VNAME=$VNAME       START_POS=$START                    \
+       VPORT=$VPORT       SHARE_LISTEN=$LPORT                 \
+       SHOREIP=$SHOREIP   SHORE_PSHARE=$SHORE_PSHARE          \
+       MAXSPD=$MAXSPD
+       
+nsplug meta_vehicle.bhv targ_$VNAME.bhv $NSARGS  \
+       VNAME=$VNAME   START_POS=$START           \
+       SPEED=$SPEED
+
+if [ "${JUST_MAKE}" = "yes" ]; then
+    vecho "JUST_MAKE is enabled - exiting now." 
+    exit 0
+fi
+
+#-------------------------------------------------------
+#  Part 6: Launch the vehicle mission
+#-------------------------------------------------------
+vecho "Launching $VNAME MOOS Community. WARP=" $TIME_WARP
+pAntler targ_$VNAME.moos >& /dev/null &
+vecho "Done Launching $VNAME MOOS Community"
+
+#-------------------------------------------------------------- 
+# Part 7: Launch uMAC until the mission is quit          
+#-------------------------------------------------------------- 
+if [ ${AUTO_LAUNCHED} = "no" ]; then
+    uMAC targ_$VNAME.moos
+fi
+
+exit 0
+
