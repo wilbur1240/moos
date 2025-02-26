@@ -2,8 +2,8 @@
 
 ARGS=("$@")
 
-REPOSITORY="argnctu/moos-dawg-2024"
-TAG="ubuntu20.04-gpu"
+REPOSITORY="wilbur1240/moos-test"
+TAG="ubuntu22.04-gpu"
 
 IMG="${REPOSITORY}:${TAG}"
 

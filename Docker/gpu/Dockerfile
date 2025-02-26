@@ -39,6 +39,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     subversion \
     libfltk1.3-dev \
     libtiff5-dev \
+    netbase \
     git \
     libbullet-dev \
     libpython3-dev \
