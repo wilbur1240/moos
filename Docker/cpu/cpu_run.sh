@@ -8,7 +8,7 @@ TAG="ubuntu22.04"
 IMG="${REPOSITORY}:${TAG}"
 
 USER_NAME="wilbur"
-REPO_NAME="moos_test"
+REPO_NAME="moos"
 CONTAINER_NAME="moos-test-ubuntu22.04"
 
 CONTAINER_ID=$(docker ps -aqf "ancestor=${IMG}")

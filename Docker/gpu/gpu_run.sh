@@ -8,8 +8,8 @@ TAG="ubuntu22.04-gpu"
 IMG="${REPOSITORY}:${TAG}"
 
 USER_NAME="wilbur"
-REPO_NAME="moos_test"
-CONTAINER_NAME="moos-dawg-2024-ubuntu20.04-gpu"
+REPO_NAME="moos"
+CONTAINER_NAME="moos-test-ubuntu20.04-gpu"
 
 CONTAINER_ID=$(docker ps -aqf "ancestor=${IMG}")
 if [ $CONTAINER_ID ]; then
