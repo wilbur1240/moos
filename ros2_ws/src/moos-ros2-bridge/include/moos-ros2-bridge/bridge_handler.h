@@ -3,6 +3,11 @@
 
 #include <string>
 
+enum class BridgeDirection {
+    toROS,
+    toMOOS
+};
+
 class BridgeHandler {
 public:
     virtual ~BridgeHandler() = default;
@@ -14,6 +19,8 @@ public:
     std::string rosName;
     std::string moosType;
     std::string rosType;
+
+    BridgeDirection direction;
 };
 
 #endif

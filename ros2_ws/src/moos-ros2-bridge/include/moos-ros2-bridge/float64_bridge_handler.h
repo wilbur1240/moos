@@ -13,7 +13,7 @@ public:
         const std::string& moos_var);
 
     void publishFromMOOS(const std::string& data_str) override;
-    void setupROSSubscriber() override;
+    void setupROSSubscriber(CMOOSCommClient* comms) override;
 
 private:
     rclcpp::Node::SharedPtr node_;

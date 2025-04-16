@@ -18,11 +18,11 @@ void Float64BridgeHandler::publishFromMOOS(const std::string& data_str) {
     pub_->publish(msg);
 }
 
-void Float64BridgeHandler::setupROSSubscriber() {
+void Float64BridgeHandler::setupROSSubscriber(CMOOSCommClient* comms) {
     sub_ = node_->create_subscription<std_msgs::msg::Float64>(
         rosName, 10,
-        [this](std_msgs::msg::Float64::SharedPtr msg) {
-            std::cout << "[ROS->MOOS] " << moosName << ": " << msg->data << std::endl;
-            // e.g. moosApp->toMOOS(moosName, msg->data);
+        [this, comms](std_msgs::msg::Float64::SharedPtr msg) {
+            std::cout << "[ROS->MOOS] Notifying " << moosName << " = " << msg->data << std::endl;
+            comms->Notify(moosName, msg->data);
         });
 }

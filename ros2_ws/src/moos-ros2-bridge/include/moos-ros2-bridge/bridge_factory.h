@@ -7,6 +7,9 @@
 
 #include "bridge_handler.h"
 #include "float64_bridge_handler.h"
+#include "float32_bridge_handler.h"
+#include "int32_bridge_handler.h"
+#include "string_bridge_handler.h"
 //add more handlers here
 
 std::shared_ptr<BridgeHandler> createBridgeHandler(
