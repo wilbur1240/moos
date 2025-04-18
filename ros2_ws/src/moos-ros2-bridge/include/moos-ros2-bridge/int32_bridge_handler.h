@@ -13,7 +13,7 @@ public:
     void setupROSSubscriber(CMOOSCommClient* comms) override;
 
 private:
-    rclcpp::Node::SharePtr node_;
+    rclcpp::Node::SharedPtr node_;
     rclcpp::Publisher<std_msgs::msg::Int32>::SharedPtr pub_;
     rclcpp::Subsciption<std_msgs::msg::Int32>::SharedPtr sub_;
 };

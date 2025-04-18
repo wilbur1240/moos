@@ -13,9 +13,9 @@ public:
     void setupROSSubscriber(CMOOSCommClient* comms) override;
 
 private:
-    rclcpp::Node::SharePtr node_;
-    rclcpp::Publisher<std_msgs::msg::Float32>::SharePtr pub_;
-    rclcpp::Subscription<std_msgs::msg::Float32>::SharePtr sub_;
+    rclcpp::Node::SharedPtr node_;
+    rclcpp::Publisher<std_msgs::msg::Float32>::SharedPtr pub_;
+    rclcpp::Subscription<std_msgs::msg::Float32>::SharedPtr sub_;
 };
 
 #endif

@@ -12,7 +12,10 @@ find_package(std_msgs REQUIRED)
 find_package(geometry_msgs REQUIRED)
 find_package(nav_msgs REQUIRED)
 find_package(MOOS REQUIRED)
-include_directories($(MOOS_INCLUDE_DIRS))
+include_directories(
+  $(MOOS_INCLUDE_DIRS)
+  ${CMAKE_CURRENT_SOURCE_DIR}/include
+)
 link_directories($(MOOS_LIBRARY_DIRS))
 
 # include directories
@@ -38,7 +41,7 @@ ament_target_dependencies(moos_ros2_bridge_lib rclcpp std_msgs geometry_msgs nav
 
 target_include_directories(moos_ros2_bridge_lib PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
-  $<INSTALL_INTERFACE:include>
+  $(MOOS_INCLUDE_DIRS)
 )
 
 add_executable(moos_ros2_bridge_main src/main.cpp)

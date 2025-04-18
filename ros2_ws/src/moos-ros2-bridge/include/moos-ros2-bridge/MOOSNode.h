@@ -1,7 +1,7 @@
 #ifndef MOOS_NODE_H
 #define MOOS_NODE_H
 
-#include <MOOS/libMOOS/App/MOOSApp.h>
+#include "MOOS/libMOOS/App/MOOSApp.h"
 #include <vector>
 #include <memory>
 #include <string>
