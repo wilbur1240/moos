@@ -5,11 +5,11 @@
 #include <string>
 #include <rclcpp/rclcpp.hpp>
 
-#include "bridge_handler.h"
-#include "float64_bridge_handler.h"
-#include "float32_bridge_handler.h"
-#include "int32_bridge_handler.h"
-#include "string_bridge_handler.h"
+#include "moos-ros2-bridge/bridge_handler.h"
+#include "moos-ros2-bridge/float64_bridge_handler.h"
+#include "moos-ros2-bridge/float32_bridge_handler.h"
+#include "moos-ros2-bridge/int32_bridge_handler.h"
+#include "moos-ros2-bridge/string_bridge_handler.h"
 //add more handlers here
 
 std::shared_ptr<BridgeHandler> createBridgeHandler(

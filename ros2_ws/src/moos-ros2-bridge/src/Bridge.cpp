@@ -1,8 +1,8 @@
-#include "bridge_factory.h"
+#include "moos-ros2-bridge/bridge_factory.h"
 
 #include <rclcpp/rclcpp.hpp>
 #include <rapidxml/rapidxml.hpp>
-#include <rapidxml/rapidxml_util.hpp>
+#include <rapidxml/rapidxml_utils.hpp>
 
 #include <vector>
 #include <memory>
@@ -16,9 +16,9 @@ using namespace rapidxml;
 std::vector<std::shared_ptr<BridgeHandler>> parseBridgeConfig(
     const std::string& config_path,
     rclcpp::Node::SharedPtr node,
-    CMOOSCommClient* moos_comms)
+    MOOSNode* moos_node)
 {
-    std::vedtor<std::shared_ptr<BridgeHandler>> bridge_handlers;
+    std::vector<std::shared_ptr<BridgeHandler>> bridge_handlers;
 
     std::ifstream file(config_path);
     if (!file){
@@ -58,7 +58,7 @@ std::vector<std::shared_ptr<BridgeHandler>> parseBridgeConfig(
             RCLCPP_INFO(node->get_logger(), "Creating publisher for MOOS->ROS: %s -> %s", moos_name.c_str(), ros_name.c_str());
         } else if (direction == "toMOOS"){
             handler->direction = BridgeDirection::toMOOS;
-            handler->setupROSSubscriber(moos_comms);
+            handler->setupROSSubscriber(moos_node);
             RCLCPP_INFO(node->get_logger(), "Creating subscriber for ROS->MOOS: %s -> %s", ros_name.c_str(), moos_name.c_str());
         } else {
             RCLCPP_WARN(node->get_logger(), "Unsupported direction: %s", direction.c_str());

@@ -5,25 +5,15 @@ if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
   add_compile_options(-Wall -Wextra -Wpedantic)
 endif()
 
-# find dependencies
+# Dependencies
 find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(std_msgs REQUIRED)
 find_package(geometry_msgs REQUIRED)
 find_package(nav_msgs REQUIRED)
 find_package(MOOS REQUIRED)
-include_directories(
-  $(MOOS_INCLUDE_DIRS)
-  ${CMAKE_CURRENT_SOURCE_DIR}/include
-)
-link_directories($(MOOS_LIBRARY_DIRS))
 
-# include directories
-include_directories(
-  include/moos-ros2-bridge
-)
-
-# list of source files
+# Source files
 set(SRC_FILES
   src/bridge_handler.cpp
   src/float64_bridge_handler.cpp
@@ -35,47 +25,65 @@ set(SRC_FILES
   src/MOOSNode.cpp
 )
 
+# Library
 add_library(moos_ros2_bridge_lib ${SRC_FILES})
-
-ament_target_dependencies(moos_ros2_bridge_lib rclcpp std_msgs geometry_msgs nav_msgs)
+ament_target_dependencies(moos_ros2_bridge_lib
+  rclcpp std_msgs geometry_msgs nav_msgs
+)
 
 target_include_directories(moos_ros2_bridge_lib PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
-  $(MOOS_INCLUDE_DIRS)
+  ${MOOS_INCLUDE_DIRS}
 )
 
-add_executable(moos_ros2_bridge_main src/main.cpp)
-target_link_libraries(moos_ros2_bridge_main moos_ros2_bridge_lib)
+target_link_libraries(moos_ros2_bridge_lib
+  ${MOOS_LIBRARIES}
+)
 
-# create a static library (if using this in other nodes)
+# Executable
+add_executable(moos_ros2_bridge_main src/main.cpp)
+target_link_libraries(moos_ros2_bridge_main
+  moos_ros2_bridge_lib
+)
 
 target_include_directories(moos_ros2_bridge_main PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
 )
 
-# install headers
+ament_target_dependencies(moos_ros2_bridge_main
+  rclcpp std_msgs geometry_msgs nav_msgs
+)
+
+# Install headers
 install(DIRECTORY include/
   DESTINATION include/
 )
 
-# install library
+# Install targets
 install(TARGETS 
-  moos_ros2_bridge_lib
   moos_ros2_bridge_main
-  ARCHIVE DESTINATION lib
-  LIBRARY DESTINATION lib
-  RUNTIME DESTINATION bin
+  DESTINATION lib/${PROJECT_NAME}
 )
 
+install(DIRECTORY launch
+  DESTINATION share/${PROJECT_NAME}/
+)
+
+install(DIRECTORY config
+  DESTINATION share/${PROJECT_NAME}/
+)
+
+add_executable(counter_node src/counter.cpp)
+ament_target_dependencies(counter_node
+  rclcpp std_msgs
+)
+install(TARGETS counter_node DESTINATION lib/${PROJECT_NAME})
+
+# Tests and linters
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)
-  # the following line skips the linter which checks for copyrights
-  # comment the line when a copyright and license is added to all source files
-  set(ament_cmake_copyright_FOUND TRUE)
-  # the following line skips cpplint (only works in a git repo)
-  # comment the line when this package is in a git repo and when
-  # a copyright and license is added to all source files
   set(ament_cmake_cpplint_FOUND TRUE)
+  set(ament_cmake_copyright_FOUND TRUE)
   ament_lint_auto_find_test_dependencies()
 endif()
 

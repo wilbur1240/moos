@@ -1,7 +1,7 @@
 #ifndef FLOAT64_BRIDGE_HANDLER_H
 #define FLOAT64_BRIDGE_HANDLER_H
 
-#include "bridge_handler.h"
+#include "moos-ros2-bridge/bridge_handler.h"
 #include <rclcpp/rclcpp.hpp>
 #include <std_msgs/msg/float64.hpp>
 
@@ -13,7 +13,7 @@ public:
         const std::string& moos_var);
 
     void publishFromMOOS(const std::string& data_str) override;
-    void setupROSSubscriber(CMOOSCommClient* comms) override;
+    void setupROSSubscriber(MOOSNode* moos_node) override;
 
 private:
     rclcpp::Node::SharedPtr node_;

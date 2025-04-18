@@ -2,6 +2,9 @@
 #define BRIDGE_HANDLER_H
 
 #include <string>
+#include <MOOS/libMOOS/Comms/MOOSAsyncCommClient.h>
+
+class MOOSNode;
 
 enum class BridgeDirection {
     toROS,
@@ -13,7 +16,7 @@ public:
     virtual ~BridgeHandler() = default;
 
     virtual void publishFromMOOS(const std::string& data_str) = 0;
-    virtual void setupROSSubscriber() = 0;
+    virtual void setupROSSubscriber(MOOSNode* moos_node) = 0;
 
     std::string moosName;
     std::string rosName;
@@ -21,6 +24,9 @@ public:
     std::string rosType;
 
     BridgeDirection direction;
+
+protected:
+    MOOSNode* moosNode_ = nullptr;
 };
 
 #endif

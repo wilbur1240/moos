@@ -6,7 +6,7 @@
 #include <memory>
 #include <string>
 
-#include "bridge_handler.h"
+#include "moos-ros2-bridge/bridge_handler.h"
 
 class MOOSNode : public CMOOSApp {
 public:
@@ -22,6 +22,10 @@ public:
     bool OnConnectToServer() override;
     bool OnStartUp() override;
 
+    // ROS->MOOS Notify
+    bool NotifyFromROS(const std::string& var, const std::string& val);
+    bool NotifyFromROS(const std::string& var, double val);
+
 protected:
     double appTick;
     double commsTick;
@@ -30,6 +34,6 @@ private:
     void DoRegisterations();
 
     std::vector<std::shared_ptr<BridgeHandler>>* bridgeHandlers_ = nullptr;
-}
+};
 
 #endif 

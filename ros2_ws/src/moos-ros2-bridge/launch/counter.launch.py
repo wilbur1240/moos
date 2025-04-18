@@ -1,4 +1,5 @@
 from launch import LaunchDescription
+from launch.actions import ExecuteProcess
 from launch_ros.actions import Node
 import os
 
@@ -11,6 +12,11 @@ def generate_launch_description():
     )
 
     return LaunchDescription([
+        ExecuteProcess(
+            cmd=['MOOSDB', os.path.join(config_dir, 'bridge.moos')],
+            name='moosdb',
+            output='screen'
+        ),
         Node(
             package='moos-ros2-bridge',
             executable='moos_ros2_bridge_main',
@@ -23,7 +29,7 @@ def generate_launch_description():
         ),
         Node(
             package='moos-ros2-bridge',
-            executable='counter',
+            executable='counter_node',
             name='counter',
             output='screen'
         )

@@ -1,5 +1,5 @@
-#include "Bridge.h"
-#include "MOOSNode.h"
+#include "moos-ros2-bridge/Bridge.h"
+#include "moos-ros2-bridge/MOOSNode.h"
 #include <rclcpp/rclcpp.hpp>
 #include <MOOS/libMOOS/App/MOOSApp.h>
 #include <thread>
@@ -15,6 +15,10 @@ std::shared_ptr<CMOOSApp> moos_app;
 
 void run_moos(const std::string& mission_file){
     moos_app->Run("MOOS_ROS_Bridge", mission_file.c_str());
+}
+
+CMOOSApp* initMOOSApp() {
+    return new MOOSNode();
 }
 
 int main(int argc, char* argv[]){
@@ -45,21 +49,14 @@ int main(int argc, char* argv[]){
     // Start MOOS in background thread
     std::thread moos_thread(run_moos, moos_file);
 
+    // get moos_node
+    MOOSNode* moos_node_ptr = dynamic_cast<MOOSNode*>(moos_app.get());
+
     // Parse bridge config and set up handlers
-    auto handlers = parseBridgeConfig(config_file, node, &moos_app->m_Comms);
+    auto handlers = parseBridgeConfig(config_file, node, moos_node_ptr);
 
     // Provide handlers to MOOSApp
-    dynamic_cast<MOOSNode*>(moos_app.get())->AssignBridgeHandlers(&bridge_handlers);
-
-    // Set up timer to simulate MOOS -> ROS updates
-    auto timer = node->create_wall_timer(
-        std::chrono::milliseconds(100),
-        [node, &handlers]() {
-            for (auto& h : handlers) {
-
-            }
-        }
-    );
+    moos_node_ptr->AssignBridgeHandlers(&handlers);
 
     rclcpp::spin(node);
 

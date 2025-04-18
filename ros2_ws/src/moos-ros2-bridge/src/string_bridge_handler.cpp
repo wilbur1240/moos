@@ -1,4 +1,5 @@
-#include "string_bridge_handler.h"
+#include "moos-ros2-bridge/string_bridge_handler.h"
+#include "moos-ros2-bridge/MOOSNode.h"
 #include <iostream>
 
 StringBridgeHandler::StringBridgeHandler(rclcpp::Node::SharedPtr node, const std::string& topic, const std::string& moos_var) : node_(node) {
@@ -13,11 +14,14 @@ void StringBridgeHandler::publishFromMOOS(const std::string& data_str) {
     pub_->publish(msg);
 }
 
-void StringBridgeHandler::setupROSSubscriber(CMOOSCommClient* comms) {
+void StringBridgeHandler::setupROSSubscriber(MOOSNode* moos_node) {
+    moosNode_ = moos_node;
     sub_ = node_->create_subscription<std_msgs::msg::String>(
         rosName, 10,
-        [this, comms](std_msgs::msg::String::SharedPtr msg) {
-            std::cout << "[ROS->MOOS] Notifying " << moosName << " = " << msg->data << std::endl;
-            comms->Notify(moosName, msg->data);
+        [this](std_msgs::msg::String::SharedPtr msg) {
+            if (moosNode_){
+                // std::cout << "[ROS->MOOS] Notifying " << moosName << " = " << msg->data << std::endl;
+                moosNode_->NotifyFromROS(moosName, msg->data);
+            }
         });
 }

@@ -1,5 +1,5 @@
 source ./ros2_ws/install/setup.bash
-export ROS_DOMAIN_ID==0
+export ROS_DOMAIN_ID=1
 
 export PATH=$PATH:/home/wilbur/moos_test/moos-ivp/bin
 export PATH=$PATH:/home/wilbur/moos_test/moos-ivp-wilbur/bin
