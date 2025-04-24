@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro" name="boat_model">
+    <link name="boat_base_link">
+        <visual>
+            <geometry>
+                <mesh filename="package://moos_boat_visualizer/meshes/boat.dae" scale="0.01 0.01 0.01"/>
+            </geometry>
+            <origin xyz="0 0 0" rpy="0 0 0 "/>
+        </visual>
+    </link>
+</robot>
