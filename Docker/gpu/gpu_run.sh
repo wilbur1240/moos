@@ -3,7 +3,7 @@
 ARGS=("$@")
 
 REPOSITORY="wilbur1240/moos-test"
-TAG="ubuntu22.04-gpu"
+TAG="ubuntu20.04-gpu"
 
 IMG="${REPOSITORY}:${TAG}"
 

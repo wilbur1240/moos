@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 REPOSITORY="wilbur1240/moos-test"
-TAG="ubuntu22.04"
+TAG="ubuntu20.04"
 
 IMG="${REPOSITORY}:${TAG}"
 

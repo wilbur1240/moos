@@ -1,9 +1,10 @@
-FROM nvidia/cuda:12.1.1-cudnn8-devel-ubuntu22.04
+FROM nvidia/cuda:12.1.1-cudnn8-devel-ubuntu20.04
 
 ENV DEBIAN_FRONTEND noninteractive
 ENV LANG C.UTF-8
 ENV LC_ALL C.UTF-8
-ENV ROS_DISTRO=humble
+ENV ROS2_DISTRO=foxy
+ENV ROS1_DISTRO=noetic
 
 ###################################### user #####################################
 
@@ -57,10 +58,10 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 
 ###################################### ROS2 ####################################
 
-RUN sh -c 'echo "deb [arch=amd64,arm64] http://packages.ros.org/ros2/ubuntu jammy main" > /etc/apt/sources.list.d/ros2-latest.list' && \
+RUN sh -c 'echo "deb [arch=amd64,arm64] http://packages.ros.org/ros2/ubuntu focal main" > /etc/apt/sources.list.d/ros2-latest.list' && \
     curl -s https://raw.githubusercontent.com/ros/rosdistro/master/ros.asc | apt-key add - && \
     apt-get update && apt-get install -y --no-install-recommends \
-    ros-${ROS_DISTRO}-desktop \
+    ros-${ROS2_DISTRO}-desktop \
     python3-argcomplete \
     python3-colcon-common-extensions \
     python3-rosdep \
@@ -70,11 +71,16 @@ RUN sh -c 'echo "deb [arch=amd64,arm64] http://packages.ros.org/ros2/ubuntu jamm
     && rosdep init && rosdep update && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
 
+###################################### ROS1 ######################################
+RUN sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros1-latest.list' && \
+    curl -s https://raw.githubusercontent.com/ros/rosdistro/master/ros.asc | apt-key add - && \
+    apt update && \
+    apt install -y ros-${ROS1_DISTRO}-desktop-full
+
 ##################################### setting ##########################################
 
 RUN chown -R ${USER}:${USER} ${HOME}/
 RUN echo "${USER} ALL=(ALL)  ALL" >> /etc/sudoers
-RUN echo "source /opt/ros/${ROS_DISTRO}/setup.bash" >> /etc/bash.bashrc
 
 USER ${USER}
 WORKDIR ${HOME}
