@@ -4,6 +4,3 @@
 [submodule "moos-ivp"]
 	path = moos-ivp
 	url = git@github.com:JetSeaAI/moos-ivp.git
-[submodule "ros2_ws/src/ros1_bridge"]
-	path = ros2_ws/src/ros1_bridge
-	url = git@github.com:ARG-NCTU/ros1_bridge.git
