@@ -7,3 +7,6 @@
 [submodule "ros2_ws/src/ros1_bridge"]
 	path = ros2_ws/src/ros1_bridge
 	url = git@github.com:wilbur1240/ros1_bridge.git
+[submodule "catkin_ws/src/moos-ros-bridge"]
+	path = catkin_ws/src/moos-ros-bridge
+	url = git@github.com:ARG-NCTU/moos-ros-bridge.git
