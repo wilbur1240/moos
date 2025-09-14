@@ -58,3 +58,9 @@ lib/
 
 install/
 log/
+
+# catkin workspace
+devel/
+build/
+install/
+.catkin_workspace
