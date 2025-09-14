@@ -1,4 +1,5 @@
 source /opt/ros/noetic/setup.bash
+source /home/wilbur/moos/catkin_ws/devel/setup.bash
 if [ $# -gt 0 ]; then
 	export ROS_MASTER_IP=$1
     echo "ROS_MASTER_IP set to $ROS_MASTER_IP"
