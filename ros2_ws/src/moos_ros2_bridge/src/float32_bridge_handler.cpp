@@ -1,5 +1,5 @@
-#include "moos-ros2-bridge/float32_bridge_handler.h"
-#include "moos-ros2-bridge/MOOSNode.h"
+#include "moos_ros2_bridge/float32_bridge_handler.h"
+#include "moos_ros2_bridge/MOOSNode.h"
 #include <iostream>
 
 Float32BridgeHandler::Float32BridgeHandler(rclcpp::Node::SharedPtr node, const std::string& topic, const std::string& moos_var) : node_(node){

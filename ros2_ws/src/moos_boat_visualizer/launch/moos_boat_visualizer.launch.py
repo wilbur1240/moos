@@ -8,7 +8,7 @@ from ament_index_python.packages import get_package_share_directory
 
 def generate_launch_description():
     config_dir = os.path.join(
-        get_package_share_directory('moos-ros2-bridge'),
+        get_package_share_directory('moos_ros2_bridge'),
         'config'
     )
 
@@ -43,7 +43,7 @@ def generate_launch_description():
         #     }],
         # ),
         Node(
-            package='moos-ros2-bridge',
+            package='moos_ros2_bridge',
             executable='moos_ros2_bridge_main',
             name='bridge',
             output='screen',

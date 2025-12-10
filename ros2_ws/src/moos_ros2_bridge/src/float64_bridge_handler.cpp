@@ -1,5 +1,5 @@
-#include "moos-ros2-bridge/float64_bridge_handler.h"
-#include "moos-ros2-bridge/MOOSNode.h"
+#include "moos_ros2_bridge/float64_bridge_handler.h"
+#include "moos_ros2_bridge/MOOSNode.h"
 #include <iostream>
 
 Float64BridgeHandler::Float64BridgeHandler(

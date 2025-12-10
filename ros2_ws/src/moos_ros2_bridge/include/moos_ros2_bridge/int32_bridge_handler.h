@@ -1,7 +1,7 @@
 #ifndef INT32_BRIDGE_HANDLER_H
 #define INT32_BRIDGE_HANDLER_H
 
-#include "moos-ros2-bridge/bridge_handler.h"
+#include "moos_ros2_bridge/bridge_handler.h"
 #include <rclcpp/rclcpp.hpp>
 #include <std_msgs/msg/int32.hpp>
 

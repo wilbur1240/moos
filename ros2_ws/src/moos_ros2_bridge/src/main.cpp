@@ -1,5 +1,5 @@
-#include "moos-ros2-bridge/Bridge.h"
-#include "moos-ros2-bridge/MOOSNode.h"
+#include "moos_ros2_bridge/Bridge.h"
+#include "moos_ros2_bridge/MOOSNode.h"
 #include <rclcpp/rclcpp.hpp>
 #include <MOOS/libMOOS/App/MOOSApp.h>
 #include <thread>

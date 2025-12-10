@@ -6,7 +6,7 @@
 #include <memory>
 #include <string>
 
-#include "moos-ros2-bridge/bridge_handler.h"
+#include "moos_ros2_bridge/bridge_handler.h"
 
 class MOOSNode : public CMOOSApp {
 public:

@@ -1,4 +1,4 @@
-#include "moos-ros2-bridge/MOOSNode.h"
+#include "moos_ros2_bridge/MOOSNode.h"
 #include <iostream>
 
 MOOSNode::MOOSNode() {

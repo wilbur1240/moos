@@ -1,7 +1,7 @@
 #ifndef STRING_BRIDGE_HANDLER_H
 #define STRING_BRIDGE_HANDLER_H
 
-#include "moos-ros2-bridge/bridge_handler.h"
+#include "moos_ros2_bridge/bridge_handler.h"
 #include <rclcpp/rclcpp.hpp>
 #include <std_msgs/msg/string.hpp>
 

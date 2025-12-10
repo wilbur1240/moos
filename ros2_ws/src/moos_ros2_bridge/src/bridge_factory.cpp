@@ -1,4 +1,4 @@
-#include "moos-ros2-bridge/bridge_factory.h"
+#include "moos_ros2_bridge/bridge_factory.h"
 
 std::shared_ptr<BridgeHandler> createBridgeHandler(
     const std::string& ros_type,

@@ -7,7 +7,7 @@ def generate_launch_description():
     config_dir = os.path.join(
         os.getenv('AMENT_PREFIX_PATH').split(':')[0],
         'share',
-        'moos-ros2-bridge',
+        'moos_ros2_bridge',
         'config'
     )
     moos_mission_dir = '/home/wilbur/moos/moos-ivp-wilbur/missions/'
@@ -20,7 +20,7 @@ def generate_launch_description():
             output='screen'
         ),
         Node(
-            package='moos-ros2-bridge',
+            package='moos_ros2_bridge',
             executable='moos_ros2_bridge_main',
             name='bridge',
             output='screen',
